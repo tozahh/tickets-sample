@@ -21,22 +21,22 @@ public class ErrorResponse {
 
     public String reason() {
         return Optional.ofNullable(error)
-            .map(RestErrors::getErrors)
-            .stream()
-            .flatMap(List::stream)
-            .map(RestError::getReason)
-            .findFirst()
+            .flatMap(errors -> errors.getErrors()
+                .stream()
+                .map(RestError::getReason)
+                .findFirst()
+            )
             .orElse(null);
     }
 
     public String message() {
         return Optional.ofNullable(error)
-            .map(RestErrors::getErrors)
-            .stream()
-            .flatMap(List::stream)
-            .map(RestError::getMessage)
-            .filter(Objects::nonNull)
-            .findFirst()
+            .flatMap(errors -> errors.getErrors()
+                .stream()
+                .map(RestError::getMessage)
+                .filter(Objects::nonNull)
+                .findFirst()
+            )
             .orElse(null);
     }
 

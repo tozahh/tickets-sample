@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +32,7 @@ class ErrorControllerAdvisor {
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String reason, Exception e) {
         Map<String, String> parameters = null;
-        List<ErrorResponse.RestError> errors = List.of(errorFactory.getError(reason, DOMAIN_TICKETS, e.getMessage()));
+        List<ErrorResponse.RestError> errors = Collections.singletonList(errorFactory.getError(reason, DOMAIN_TICKETS, e.getMessage()));
         return ResponseEntity.status(status)
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(new ErrorResponse(UUID.randomUUID().toString(), null, new ErrorResponse.RestErrors(errors)));
