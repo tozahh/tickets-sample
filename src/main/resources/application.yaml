@@ -1,0 +1,29 @@
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    url: jdbc:postgresql://localhost:5432/testapp
+#    driver-class-name: org.postgresql.Driver
+#    username: postgres
+#    password: postgres
+#    hikari:
+#      idle-timeout: 60000
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+management:
+  endpoint:
+    health:
+      group:
+        readiness:
+          include: 'readiness,database'
+        liveness:
+          include: 'liveness,database'
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ["health", "prometheus", "metrics"]
